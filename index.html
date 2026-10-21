@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verdant Protect | Precision Eco-Pest Control in Patchogue, NY</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldAccent: '#00E676',
+                        emeraldGlow: '#10B981',
+                        emeraldDark: '#052e16',
+                        darkBg: '#0a0a0c',
+                        cardBg: '#121318',
+                        glassBg: 'rgba(18, 19, 24, 0.75)',
+                        borderMuted: 'rgba(255, 255, 255, 0.08)'
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'orb-glow': 'orbGlow 8s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        orbGlow: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '100%': { transform: 'translate(40px, -30px) scale(1.15)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Apple-Style Glassmorphism & High-Level Micro-Interactions */
+        body {
+            background-color: #0a0a0c;
+            color: #E5E7EB;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        .apple-glass {
+            background: rgba(18, 19, 24, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .apple-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .apple-card:hover {
+            border-color: rgba(0, 230, 118, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(0, 230, 118, 0.18);
+        }
+
+        .apple-button {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .apple-button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.45);
+        }
+
+        .apple-button:active {
+            transform: scale(0.97);
+        }
+
+        /* Reveal behavior */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22232a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00E676;
+        }
+
+        /* Text Gradient Effect */
+        .gradient-text {
+            background: linear-gradient(135deg, #FFFFFF 30%, #00E676 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .green-glow {
+            box-shadow: 0 0 60px -10px rgba(0, 230, 118, 0.25);
+        }
+
+        /* Specular glare overlay for 3D cards */
+        .card-glare {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,230,118,0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .apple-card:hover .card-glare {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="selection:bg-emeraldAccent selection:text-black min-h-screen flex flex-col justify-between relative">
+
+    <!-- BACKGROUND INTERACTIVE HERO CANVAS & AMBIENT GLOW ORBS -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <canvas id="hero-canvas" class="w-full h-full opacity-40"></canvas>
+        <div class="absolute top-1/4 -left-20 w-[450px] h-[450px] bg-emeraldAccent/10 rounded-full blur-[140px] animate-orb-glow"></div>
+        <div class="absolute bottom-1/3 -right-20 w-[500px] h-[500px] bg-emeraldGlow/10 rounded-full blur-[160px] animate-orb-glow" style="animation-delay: -4s;"></div>
+    </div>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 apple-glass transition-all duration-300 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" onclick="navigateTo('home'); return false;" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center group-hover:border-emeraldAccent transition-colors">
+                    <i class="fa-solid fa-shield-halved text-emeraldAccent text-xl group-hover:scale-110 transition-transform"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-white group-hover:text-emeraldAccent transition-colors">
+                    Verdant<span class="text-emeraldAccent">Protect</span>
+                </span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <button id="nav-home" onclick="navigateTo('home')" class="nav-btn text-emeraldAccent transition-colors hover:text-emeraldAccent">Home</button>
+                <button id="nav-service" onclick="navigateTo('service')" class="nav-btn text-gray-400 transition-colors hover:text-emeraldAccent">Services</button>
+                <button id="nav-about" onclick="navigateTo('about')" class="nav-btn text-gray-400 transition-colors hover:text-emeraldAccent">About Us</button>
+                <button id="nav-blog" onclick="navigateTo('blog')" class="nav-btn text-gray-400 transition-colors hover:text-emeraldAccent">Blog & Insights</button>
+                <button id="nav-contact" onclick="navigateTo('contact')" class="nav-btn text-gray-400 transition-colors hover:text-emeraldAccent">Contact</button>
+            </nav>
+
+            <!-- Call to Action Nav Button -->
+            <div class="hidden md:block">
+                <button onclick="navigateTo('contact')" class="apple-button bg-emeraldAccent text-black font-semibold px-5 py-2.5 rounded-full text-sm">
+                    Request Inspection
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-toggle" class="md:hidden text-gray-300 hover:text-white text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4 pt-4 border-t border-white/10 flex flex-col space-y-4 text-center">
+            <button onclick="navigateTo('home'); toggleMobileMenu();" class="text-gray-300 hover:text-emeraldAccent py-2 text-base">Home</button>
+            <button onclick="navigateTo('service'); toggleMobileMenu();" class="text-gray-300 hover:text-emeraldAccent py-2 text-base">Services</button>
+            <button onclick="navigateTo('about'); toggleMobileMenu();" class="text-gray-300 hover:text-emeraldAccent py-2 text-base">About Us</button>
+            <button onclick="navigateTo('blog'); toggleMobileMenu();" class="text-gray-300 hover:text-emeraldAccent py-2 text-base">Blog & Insights</button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu();" class="text-gray-300 hover:text-emeraldAccent py-2 text-base">Contact</button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu();" class="bg-emeraldAccent text-black font-semibold py-3 rounded-xl text-base">
+                Request Inspection
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="pt-24 flex-grow z-10 relative">
+
+        <!-- ================= PAGE 1: HOME PAGE ================= -->
+        <section id="page-home" class="page-section">
+            <!-- Hero Section -->
+            <div class="relative min-h-[85vh] flex items-center justify-center px-6 overflow-hidden">
+                <div class="max-w-5xl mx-auto text-center relative z-10 space-y-8 py-12">
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full apple-glass border border-emeraldAccent/30 text-emeraldAccent text-xs md:text-sm font-semibold tracking-wide uppercase reveal active">
+                        <span class="w-2 h-2 rounded-full bg-emeraldAccent animate-pulse"></span>
+                        <span>Next-Generation Pest Control in Patchogue, NY</span>
+                    </div>
+
+                    <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight text-white leading-tight reveal active">
+                        Silent Precision.<br/>
+                        <span class="gradient-text">Zero Pest Tolerance.</span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-normal leading-relaxed reveal active">
+                        Verdant Protect merges high-tech eco-friendly botanical barriers with microscopic environmental engineering to keep Patchogue homes completely pristine.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 reveal active">
+                        <button onclick="navigateTo('contact')" class="apple-button w-full sm:w-auto bg-emeraldAccent text-black font-bold px-8 py-4 rounded-full text-lg">
+                            Get Free Home Assessment
+                        </button>
+                        <button onclick="navigateTo('service')" class="apple-button w-full sm:w-auto apple-glass text-white font-semibold px-8 py-4 rounded-full text-lg hover:bg-white/10">
+                            Explore Services
+                        </button>
+                    </div>
+
+                    <!-- HERO VISUAL SHOWCASE WITH INTEGRATED PERIMETER DIAGRAM -->
+                    <div class="pt-8 reveal active">
+                        <div class="relative mx-auto max-w-4xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl green-glow apple-card">
+                            <div class="card-glare"></div>
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" alt="Pristine Patchogue NY Home Environment" class="w-full h-[320px] md:h-[480px] object-cover filter brightness-75 hover:scale-105 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent"></div>
+                            
+                            <!-- Floating Interactive Dynamic Overlay Graphic -->
+                            <div class="absolute bottom-6 left-6 right-6 p-6 apple-glass rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4 border border-emeraldAccent/30">
+                                <div class="flex items-center space-x-4 text-left">
+                                    <div class="w-12 h-12 rounded-xl bg-emeraldAccent/20 border border-emeraldAccent flex items-center justify-center text-emeraldAccent text-2xl animate-pulse">
+                                        <i class="fa-solid fa-shield-cat"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs uppercase text-emeraldAccent font-semibold tracking-wider">Perimeter Defense Status</p>
+                                        <p class="text-sm font-medium text-white">100% Eco-Botanical Shield Active in Patchogue, NY</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2 text-xs text-gray-300">
+                                    <span class="px-3 py-1.5 rounded-lg bg-emerald-950/80 border border-emerald-500/30 text-emerald-300"><i class="fa-solid fa-check text-emeraldAccent mr-1"></i> Child Safe</span>
+                                    <span class="px-3 py-1.5 rounded-lg bg-emerald-950/80 border border-emerald-500/30 text-emerald-300"><i class="fa-solid fa-check text-emeraldAccent mr-1"></i> Pet Approved</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE GRAPHICAL PEST RISK ASSESSMENT RADAR WIDGET -->
+            <div class="max-w-7xl mx-auto px-6 py-16">
+                <div class="apple-card p-8 md:p-12 rounded-3xl border border-emeraldAccent/30 relative overflow-hidden green-glow reveal">
+                    <div class="card-glare"></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 space-y-4">
+                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emeraldAccent text-xs uppercase font-semibold">
+                                <i class="fa-solid fa-calculator"></i>
+                                <span>Interactive Risk Calculator</span>
+                            </div>
+                            <h2 class="text-2xl md:text-4xl font-bold text-white">Patchogue Seasonal Pest Risk Radar</h2>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Select property traits and target pest vectors to calculate your immediate structural defense score and vulnerability index in Long Island.
+                            </p>
+                            <div class="space-y-3 pt-2">
+                                <label class="block text-xs uppercase text-gray-400 font-semibold">Primary Target Threat:</label>
+                                <div class="grid grid-cols-2 gap-2" id="pest-selector-btns">
+                                    <button onclick="updatePestRadar('termites', 88, 'Critical Structural Vulnerability')" class="radar-btn px-3 py-2 rounded-xl text-xs font-semibold bg-emeraldAccent/20 text-emeraldAccent border border-emeraldAccent text-left hover:bg-emeraldAccent/30 transition-all flex items-center justify-between">
+                                        <span>Subterranean Termites</span>
+                                        <i class="fa-solid fa-bug"></i>
+                                    </button>
+                                    <button onclick="updatePestRadar('rodents', 75, 'High Attic & Basement Intrusion')" class="radar-btn px-3 py-2 rounded-xl text-xs font-semibold bg-black/50 text-gray-400 border border-white/10 text-left hover:bg-emeraldAccent/10 transition-all flex items-center justify-between">
+                                        <span>Rodent/Mouse Exclusion</span>
+                                        <i class="fa-solid fa-shield-cat"></i>
+                                    </button>
+                                    <button onclick="updatePestRadar('bedbugs', 62, 'Moderate Interior Threat')" class="radar-btn px-3 py-2 rounded-xl text-xs font-semibold bg-black/50 text-gray-400 border border-white/10 text-left hover:bg-emeraldAccent/10 transition-all flex items-center justify-between">
+                                        <span>Bed Bug Heat Barrier</span>
+                                        <i class="fa-solid fa-bed"></i>
+                                    </button>
+                                    <button onclick="updatePestRadar('mosquitoes', 94, 'High Seasonal Yard Hazard')" class="radar-btn px-3 py-2 rounded-xl text-xs font-semibold bg-black/50 text-gray-400 border border-white/10 text-left hover:bg-emeraldAccent/10 transition-all flex items-center justify-between">
+                                        <span>Mosquito & Tick Mists</span>
+                                        <i class="fa-solid fa-mosquito"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Graphical Gauge Display -->
+                        <div class="lg:col-span-7 flex flex-col md:flex-row items-center justify-around bg-black/60 p-6 md:p-8 rounded-2xl border border-white/10 gap-6">
+                            <!-- Visual Radial Gauge SVG -->
+                            <div class="relative w-44 h-44 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" />
+                                    <circle id="radar-gauge-circle" cx="50" cy="50" r="40" stroke="#00E676" stroke-width="8" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="30" stroke-linecap="round" class="transition-all duration-1000 ease-out" />
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                    <span id="radar-score-text" class="text-3xl font-extrabold text-white">88%</span>
+                                    <span class="text-[10px] text-emeraldAccent font-semibold uppercase tracking-wider">Risk Level</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 text-center md:text-left">
+                                <div class="space-y-1">
+                                    <span class="text-xs uppercase text-gray-400 font-medium">Status Assessment</span>
+                                    <h4 id="radar-status-title" class="text-lg font-bold text-emeraldAccent">Critical Structural Vulnerability</h4>
+                                    <p id="radar-status-desc" class="text-xs text-gray-300 max-w-xs">High humidity along Patchogue bay areas triggers heavy subterranean activity near timber frames.</p>
+                                </div>
+                                <div class="pt-2">
+                                    <button onclick="navigateTo('contact')" class="apple-button bg-emeraldAccent text-black font-bold px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider">
+                                        Neutralize Threat Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANIMATED VECTOR DIAGRAM: ECO PERIMETER CYCLE -->
+            <div class="max-w-7xl mx-auto px-6 py-16 space-y-12">
+                <div class="text-center max-w-2xl mx-auto space-y-4 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">The Verdant Eco-Barrier Process</h2>
+                    <p class="text-gray-400">Minimalist aesthetic, maximum extermination efficiency, and eco-sustainable security.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Step 1 -->
+                    <div class="apple-card p-6 rounded-3xl space-y-4 text-center relative reveal">
+                        <div class="card-glare"></div>
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emeraldAccent text-2xl">
+                            <svg class="w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">1. Sensor Scan</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Thermal micro-imaging identifies thermal nests and wall cavity pathways.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="apple-card p-6 rounded-3xl space-y-4 text-center relative reveal">
+                        <div class="card-glare"></div>
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emeraldAccent text-2xl">
+                            <svg class="w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">2. Bio-Barrier</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Micro-encapsulated plant derivatives applied along exterior foundation seals.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="apple-card p-6 rounded-3xl space-y-4 text-center relative reveal">
+                        <div class="card-glare"></div>
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emeraldAccent text-2xl">
+                            <svg class="w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">3. Exclusion</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Heavy-duty structural mesh seals points of entry around soffits and basements.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="apple-card p-6 rounded-3xl space-y-4 text-center relative reveal">
+                        <div class="card-glare"></div>
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emeraldAccent text-2xl">
+                            <svg class="w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">4. Certification</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed">Continuous digital monitoring guarantees 365-day protection compliance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: SERVICE PAGE ================= -->
+        <section id="page-service" class="page-section hidden">
+            <div class="max-w-7xl mx-auto px-6 py-12 space-y-16">
+                <!-- Service Page Header -->
+                <div class="text-center max-w-3xl mx-auto space-y-4 reveal active">
+                    <span class="text-xs uppercase text-emeraldAccent font-semibold tracking-widest">Precision Protection</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-white">Tailored Pest Solutions</h1>
+                    <p class="text-gray-400 text-lg">Comprehensive pest management engineered for residential and commercial properties across Patchogue, NY.</p>
+                </div>
+
+                <!-- Service Grid with Specular Glare & 3D Tilt -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Item 1 -->
+                    <div class="apple-card rounded-3xl overflow-hidden group reveal active relative">
+                        <div class="card-glare"></div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=800&q=80" alt="Eco Termite Barrier" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent"></div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Termite Shield</h3>
+                                <i class="fa-solid fa-bug text-emeraldAccent text-xl"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Complete subterranean termite elimination using subterranean baiting stations and eco-friendly soil barrier treatments.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="text-emeraldAccent font-semibold text-sm hover:underline inline-flex items-center space-x-2">
+                                <span>Request Quote</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Service Item 2 -->
+                    <div class="apple-card rounded-3xl overflow-hidden group reveal active relative">
+                        <div class="card-glare"></div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?auto=format&fit=crop&w=800&q=80" alt="Rodent Exclusion" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent"></div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Rodent Exclusion</h3>
+                                <i class="fa-solid fa-shield-cat text-emeraldAccent text-xl"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Comprehensive entry-point sealing using heavy-duty mesh barriers, eco-traps, and sanitation monitoring for long-term protection.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="text-emeraldAccent font-semibold text-sm hover:underline inline-flex items-center space-x-2">
+                                <span>Request Quote</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Service Item 3 -->
+                    <div class="apple-card rounded-3xl overflow-hidden group reveal active relative">
+                        <div class="card-glare"></div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?auto=format&fit=crop&w=800&q=80" alt="Bed Bug Thermal Treatment" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent"></div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Bed Bug Remediation</h3>
+                                <i class="fa-solid fa-bed text-emeraldAccent text-xl"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                High-precision thermal heat diffusion treatments that eradicate bed bugs at all life stages without toxic chemical residues.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="text-emeraldAccent font-semibold text-sm hover:underline inline-flex items-center space-x-2">
+                                <span>Request Quote</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Service Item 4 -->
+                    <div class="apple-card rounded-3xl overflow-hidden group reveal active relative">
+                        <div class="card-glare"></div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80" alt="Mosquito Yard Barrier" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent"></div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Mosquito & Tick Defense</h3>
+                                <i class="fa-solid fa-mosquito text-emeraldAccent text-xl"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Seasonal yard misting barriers designed to eliminate mosquitoes and deer ticks, making outdoor spaces safe for pets and family.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="text-emeraldAccent font-semibold text-sm hover:underline inline-flex items-center space-x-2">
+                                <span>Request Quote</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Service Item 5 -->
+                    <div class="apple-card rounded-3xl overflow-hidden group reveal active relative">
+                        <div class="card-glare"></div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80" alt="Wildlife Control" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent"></div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Humane Wildlife Control</h3>
+                                <i class="fa-solid fa-tree text-emeraldAccent text-xl"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Gentle relocation for raccoons, squirrels, bats, and opossums, paired with structural repair to prevent re-entry.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="text-emeraldAccent font-semibold text-sm hover:underline inline-flex items-center space-x-2">
+                                <span>Request Quote</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Service Item 6 -->
+                    <div class="apple-card rounded-3xl overflow-hidden group reveal active relative">
+                        <div class="card-glare"></div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Commercial Facility Safeguard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent"></div>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Commercial Facility Safeguard</h3>
+                                <i class="fa-solid fa-building text-emeraldAccent text-xl"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Discrete, compliance-focused pest management for restaurants, hotels, warehouses, and offices in Patchogue.
+                            </p>
+                            <button onclick="navigateTo('contact')" class="text-emeraldAccent font-semibold text-sm hover:underline inline-flex items-center space-x-2">
+                                <span>Request Quote</span>
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: ABOUT PAGE ================= -->
+        <section id="page-about" class="page-section hidden">
+            <div class="max-w-7xl mx-auto px-6 py-12 space-y-20">
+                <!-- About Header -->
+                <div class="text-center max-w-3xl mx-auto space-y-4 reveal active">
+                    <span class="text-xs uppercase text-emeraldAccent font-semibold tracking-widest">Our Heritage</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-white">Redefining Pest Control in Patchogue</h1>
+                    <p class="text-gray-400 text-lg">Where eco-conscious biology meets modern precision craftsmanship.</p>
+                </div>
+
+                <!-- Story Block -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 reveal active">
+                        <h2 class="text-3xl font-bold text-white">Crafted for Long Island's Coastal Ecosystem</h2>
+                        <p class="text-gray-400 leading-relaxed">
+                            Founded in Suffolk County, Verdant Protect was created to solve a persistent issue: standard extermination methods relied too heavily on harsh chemical sprays that disrupted local ecosystems and posed risks to households.
+                        </p>
+                        <p class="text-gray-400 leading-relaxed">
+                            We pioneered a minimalist, high-efficacy protocol specifically adapted to Patchogue’s unique coastal humidity and seasonal insect migrations. By utilizing advanced micro-encapsulated botanical barriers and high-precision physical exclusions, we deliver total pest eradication with zero ecological compromise.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6 pt-4">
+                            <div class="apple-card p-4 rounded-2xl border-l-4 border-l-emeraldAccent relative">
+                                <div class="card-glare"></div>
+                                <p class="text-3xl font-extrabold text-white">99.8%</p>
+                                <p class="text-xs text-gray-400 mt-1">Client Satisfaction Rate</p>
+                            </div>
+                            <div class="apple-card p-4 rounded-2xl border-l-4 border-l-emeraldAccent relative">
+                                <div class="card-glare"></div>
+                                <p class="text-3xl font-extrabold text-white">0% Toxic</p>
+                                <p class="text-xs text-gray-400 mt-1">Chemical Residue Guarantee</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative rounded-3xl overflow-hidden apple-card p-2 reveal active">
+                        <div class="card-glare"></div>
+                        <img src="https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1000&q=80" alt="Pest Control Specialists" class="rounded-2xl w-full h-[450px] object-cover">
+                    </div>
+                </div>
+
+                <!-- Core Values -->
+                <div class="space-y-10">
+                    <h2 class="text-3xl font-bold text-white text-center">Core Principles</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="apple-card p-8 rounded-3xl space-y-3 relative">
+                            <div class="card-glare"></div>
+                            <i class="fa-solid fa-microchip text-emeraldAccent text-3xl"></i>
+                            <h3 class="text-xl font-bold text-white">Precision Methodology</h3>
+                            <p class="text-gray-400 text-sm">Every treatment plan is custom-engineered based on structural analysis and specific bug taxonomy.</p>
+                        </div>
+                        <div class="apple-card p-8 rounded-3xl space-y-3 relative">
+                            <div class="card-glare"></div>
+                            <i class="fa-solid fa-earth-americas text-emeraldAccent text-3xl"></i>
+                            <h3 class="text-xl font-bold text-white">Eco-Harmony</h3>
+                            <p class="text-gray-400 text-sm">Protecting human homes while maintaining respect for the native Long Island ecosystem.</p>
+                        </div>
+                        <div class="apple-card p-8 rounded-3xl space-y-3 relative">
+                            <div class="card-glare"></div>
+                            <i class="fa-solid fa-lock text-emeraldAccent text-3xl"></i>
+                            <h3 class="text-xl font-bold text-white">Guaranteed Discretion</h3>
+                            <p class="text-gray-400 text-sm">Unmarked eco-friendly service vehicles providing quiet, professional, and private resolutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 4: BLOG PAGE (1,200+ Words SEO Article) ================= -->
+        <section id="page-blog" class="page-section hidden">
+            <div class="max-w-4xl mx-auto px-6 py-12 space-y-12">
+                <!-- Blog Header Visual -->
+                <div class="space-y-6 text-center reveal active">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full apple-glass border border-emeraldAccent/30 text-emeraldAccent text-xs uppercase tracking-widest font-semibold">
+                        <span>Pest Control Guide & Insights</span>
+                    </div>
+
+                    <!-- Styled Heading (H1 Structure) -->
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+                        The Comprehensive Guide to Safe, High-Efficacy Pest Control in Patchogue, NY
+                    </h1>
+
+                    <div class="flex items-center justify-center space-x-6 text-xs text-gray-400 border-y border-white/10 py-3">
+                        <span><i class="fa-regular fa-calendar text-emeraldAccent mr-1"></i> October 2026</span>
+                        <span><i class="fa-regular fa-clock text-emeraldAccent mr-1"></i> 12 Min Read</span>
+                        <span><i class="fa-solid fa-shield-halved text-emeraldAccent mr-1"></i> Verdant Research Team</span>
+                    </div>
+                </div>
+
+                <!-- Featured Header Image -->
+                <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl reveal active">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" alt="Pest Control in Patchogue, NY Residential Property" class="w-full h-[350px] md:h-[450px] object-cover">
+                </div>
+
+                <!-- Blog Body Text -->
+                <article class="prose prose-invert max-w-none text-gray-300 space-y-8 leading-relaxed text-base md:text-lg reveal active">
+
+                    <p class="text-xl text-gray-200 font-light leading-relaxed border-l-4 border-emeraldAccent pl-4 italic">
+                        Maintaining a serene, pest-free living space in Patchogue, Long Island requires more than off-the-shelf aerosol sprays. Due to our unique coastal atmosphere, humid summers, and historic home structures, professional <a href="https://quickpestcontrolpro.com/pest-control-patchogue-ny" class="text-emeraldAccent font-semibold underline decoration-emeraldAccent/50 hover:decoration-emeraldAccent transition-all">Pest Control in Patchogue, NY</a> is essential to protecting both family health and property valuation.
+                    </p>
+
+                    <!-- Section Header (H2 Equivalent) -->
+                    <div class="pt-6">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white border-b border-white/10 pb-3 mb-4">
+                            Understanding Patchogue's Distinct Pest Ecosystem
+                        </h2>
+                        <p class="mb-4">
+                            Nestled along Great South Bay, Patchogue benefits from breathtaking maritime landscapes and vibrant downtown vitality. However, these same environmental characteristics create an ideal habitat for a wide array of perimeter invaders. The combination of high moisture levels from the bay, mature tree canopy coverage, and varying seasonal temperatures forces insects and rodents to seek shelter inside residential properties.
+                        </p>
+                        <p>
+                            From subterranean termites nesting in damp foundations to carpenter ants infiltrating wooden frameworks, local homes face constant biological pressure. Understanding these seasonal vectors is the cornerstone of implementing long-term protective barriers.
+                        </p>
+                    </div>
+
+                    <!-- Sub-Section Header (H3 Equivalent) -->
+                    <div class="pt-4">
+                        <h3 class="text-xl md:text-2xl font-semibold text-emeraldAccent mb-3">
+                            Seasonal Pest Vectors Across Long Island's South Shore
+                        </h3>
+                        <p class="mb-4">
+                            Pest infestation patterns in Suffolk County follow a predictable seasonal cadence that requires proactive intervention rather than reactive extermination:
+                        </p>
+                        <ul class="list-disc pl-6 space-y-2 text-gray-300">
+                            <li><strong>Spring Swarms:</strong> As ground temperatures rise, subterranean termite swarmers emerge to form new colonies, targeting damp cellulose materials around foundations.</li>
+                            <li><strong>Summer Invasions:</strong> Mosquitoes, stinging insects, and carpenter ants reach peak activity levels during Patchogue's warm, humid summer months.</li>
+                            <li><strong>Autumn Intrusion:</strong> Cooling temperatures in September and October drive mice, rats, and stink bugs into attics, basements, and wall voids seeking thermal warmth.</li>
+                            <li><strong>Winter Shelter:</strong> Established indoor populations of rodents and bed bugs thrive in heated indoor micro-environments if left unaddressed.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Section Header (H2 Equivalent) -->
+                    <div class="pt-6">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white border-b border-white/10 pb-3 mb-4">
+                            Key Signs Your Property Needs Immediate Intervention
+                        </h2>
+                        <p class="mb-4">
+                            Detecting insect or rodent presence in its infancy can save homeowners thousands of dollars in structural restoration. Many infestations remain unseen until significant damage has already transpired behind drywall or floorboards.
+                        </p>
+                        <p class="mb-4">
+                            If you notice hollow-sounding timber, discarded insect wings along window sills, or tiny dark droppings in kitchen cabinets, it is imperative to secure professional <a href="https://quickpestcontrolpro.com/pest-control-patchogue-ny" class="text-emeraldAccent font-semibold underline decoration-emeraldAccent/50 hover:decoration-emeraldAccent transition-all">Pest Control in Patchogue, NY</a> before colonies expand.
+                        </p>
+                    </div>
+
+                    <!-- Inline Image Break -->
+                    <div class="my-8 rounded-2xl overflow-hidden border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=1000&q=80" alt="Eco-friendly pest barrier protection" class="w-full h-64 object-cover">
+                    </div>
+
+                    <!-- Sub-Section Header (H3 Equivalent) -->
+                    <div class="pt-2">
+                        <h3 class="text-xl md:text-2xl font-semibold text-emeraldAccent mb-3">
+                            The Hidden Hazards of DIY Pest Solutions
+                        </h3>
+                        <p class="mb-4">
+                            When faced with an unexpected cockroach or rodent, many property owners attempt self-treatment using over-the-counter chemical sprays. Unfortunately, retail pesticide sprays often do more harm than good:
+                        </p>
+                        <ol class="list-decimal pl-6 space-y-2 text-gray-300">
+                            <li><strong>Repellent Fracturing:</strong> Chemical sprays frequently scatter ant colonies, causing them to divide into multiple sub-colonies throughout the home.</li>
+                            <li><strong>Superficial Reach:</strong> Aerosols only eliminate visible pests on surfaces, leaving queen nests and hidden breeding grounds intact.</li>
+                            <li><strong>Health Risks:</strong> Improper chemical application leaves toxic residues on floors and countertops, posing genuine risks to pets and children.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Section Header (H2 Equivalent) -->
+                    <div class="pt-6">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white border-b border-white/10 pb-3 mb-4">
+                            The Modern Botanical Approach to Extermination
+                        </h2>
+                        <p class="mb-4">
+                            The modern paradigm of pest management has shifted dramatically away from harsh synthetic organophosphates toward high-tech bio-pesticides and structural exclusion. Utilizing advanced plant-derived active ingredients, bio-barriers disrupt insect nervous systems while remaining non-toxic to mammals.
+                        </p>
+                        <p class="mb-4">
+                            Through comprehensive Integrated Pest Management (IPM), specialists evaluate structural entry points, humidity levels, and food attractants. By combining physical exclusion sealants with targeted green applications, homeowners enjoy permanent security without chemical odor or residue.
+                        </p>
+                    </div>
+
+                    <!-- Sub-Section Header (H3 Equivalent) -->
+                    <div class="pt-2">
+                        <h3 class="text-xl md:text-2xl font-semibold text-emeraldAccent mb-3">
+                            Protecting Historic Patchogue Architecture
+                        </h3>
+                        <p class="mb-4">
+                            Patchogue features many gorgeous historic homes with original hardwood framework, crawlspaces, and balloon-frame construction. These architectural styles offer unique structural voids where pests can navigate freely between floors.
+                        </p>
+                        <p>
+                            Specialized technicians leverage thermal imaging technology to pinpoint hidden hives without drilling unnecessary holes or damaging historical craftsmanship. Utilizing precise subterranean baiting systems allows complete eradication while respecting the architectural integrity of your residence.
+                        </p>
+                    </div>
+
+                    <!-- Section Header (H2 Equivalent) -->
+                    <div class="pt-6">
+                        <h2 class="text-2xl md:text-3xl font-bold text-white border-b border-white/10 pb-3 mb-4">
+                            Selecting the Right Extermination Partner in Long Island
+                        </h2>
+                        <p class="mb-4">
+                            When evaluating local pest providers, ensure they possess state certifications, transparent eco-friendly protocols, and deep experience with Long Island fauna. Investing in dependable <a href="https://quickpestcontrolpro.com/pest-control-patchogue-ny" class="text-emeraldAccent font-semibold underline decoration-emeraldAccent/50 hover:decoration-emeraldAccent transition-all">Pest Control in Patchogue, NY</a> guarantees that your family remains safeguarded against vector-borne illnesses and structural degradation.
+                        </p>
+                    </div>
+
+                    <!-- Conclusion Section -->
+                    <div class="pt-8 border-t border-emeraldAccent/30 space-y-4 apple-card p-6 rounded-2xl relative">
+                        <div class="card-glare"></div>
+                        <h2 class="text-2xl font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-check text-emeraldAccent"></i>
+                            <span>Conclusion: Long-Term Peace of Mind</span>
+                        </h2>
+                        <p class="text-gray-300">
+                            Pest infestation is not merely an inconvenience; it is a threat to household sanctuary and property structural health. By choosing eco-friendly, technology-driven pest management solutions tailored specifically for Patchogue's environment, you ensure your home remains an impenetrable, healthy haven for years to come.
+                        </p>
+                    </div>
+
+                    <!-- Frequently Asked Questions (FNP Section) -->
+                    <div class="pt-8 space-y-6">
+                        <h2 class="text-2xl font-bold text-white border-b border-white/10 pb-3">
+                            Frequently Asked Questions & Key Takeaways
+                        </h2>
+
+                        <div class="space-y-4">
+                            <div class="apple-card p-5 rounded-2xl relative">
+                                <div class="card-glare"></div>
+                                <h3 class="text-lg font-semibold text-emeraldAccent mb-1">Are your eco-friendly treatments safe for dogs and cats?</h3>
+                                <p class="text-sm text-gray-400">Yes. Our botanical treatments utilize naturally derived micro-encapsulated formulations designed specifically to target cold-blooded insect nervous systems while remaining safe for mammals.</p>
+                            </div>
+
+                            <div class="apple-card p-5 rounded-2xl relative">
+                                <div class="card-glare"></div>
+                                <h3 class="text-lg font-semibold text-emeraldAccent mb-1">How quickly can service technicians respond to Patchogue emergencies?</h3>
+                                <p class="text-sm text-gray-400">We maintain dedicated local emergency mobile units across Patchogue and Suffolk County, offering same-day and 24/7 rapid dispatch for severe infestations.</p>
+                            </div>
+
+                            <div class="apple-card p-5 rounded-2xl relative">
+                                <div class="card-glare"></div>
+                                <h3 class="text-lg font-semibold text-emeraldAccent mb-1">How often should residential pest inspections be conducted?</h3>
+                                <p class="text-sm text-gray-400">We recommend bi-annual perimeter inspections (Spring and Autumn) to replenish eco-barriers and detect early signs of termite or rodent activity before infestation occurs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: CONTACT PAGE ================= -->
+        <section id="page-contact" class="page-section hidden">
+            <div class="max-w-4xl mx-auto px-6 py-12 space-y-12">
+                <!-- Contact Header -->
+                <div class="text-center space-y-4 reveal active">
+                    <span class="text-xs uppercase text-emeraldAccent font-semibold tracking-widest">Discreet Inquiry</span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-white">Request a Private Assessment</h1>
+                    <p class="text-gray-400 text-lg">Provide your details below to receive a confidential, non-binding quote and inspection schedule.</p>
+                </div>
+
+                <!-- Interactive Form Container -->
+                <div class="apple-card p-8 md:p-12 rounded-3xl relative overflow-hidden green-glow reveal active">
+                    <div class="card-glare"></div>
+                    <!-- Feedback Success Alert Box -->
+                    <div id="contact-success-message" class="hidden mb-8 p-4 rounded-2xl bg-emerald-500/20 border border-emeraldAccent text-emeraldAccent text-center">
+                        <i class="fa-solid fa-circle-check text-xl mb-2 block"></i>
+                        <p class="font-bold">Inspection Request Received!</p>
+                        <p class="text-xs text-gray-300 mt-1">Our Patchogue team will review your message and reach out within 2 hours.</p>
+                    </div>
+
+                    <form id="pest-inquiry-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Visitor Name Input -->
+                            <div class="space-y-2">
+                                <label for="visitor-name" class="block text-xs uppercase text-gray-400 font-semibold tracking-wider">Full Name *</label>
+                                <input type="text" id="visitor-name" required placeholder="e.g., John Doe" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-emeraldAccent transition-colors">
+                            </div>
+
+                            <!-- Visitor Phone Input -->
+                            <div class="space-y-2">
+                                <label for="visitor-phone" class="block text-xs uppercase text-gray-400 font-semibold tracking-wider">Phone Number *</label>
+                                <input type="tel" id="visitor-phone" required placeholder="(631) 000-0000" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-emeraldAccent transition-colors">
+                            </div>
+                        </div>
+
+                        <!-- Visitor Email Input -->
+                        <div class="space-y-2">
+                            <label for="visitor-email" class="block text-xs uppercase text-gray-400 font-semibold tracking-wider">Email Address *</label>
+                            <input type="email" id="visitor-email" required placeholder="name@domain.com" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-emeraldAccent transition-colors">
+                        </div>
+
+                        <!-- Visitor Service Needs -->
+                        <div class="space-y-2">
+                            <label for="pest-type" class="block text-xs uppercase text-gray-400 font-semibold tracking-wider">Primary Concern</label>
+                            <select id="pest-type" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-emeraldAccent transition-colors">
+                                <option value="general">General Home Inspection</option>
+                                <option value="termites">Termites / Wood Boring Insects</option>
+                                <option value="rodents">Rodents / Mice / Rats</option>
+                                <option value="bedbugs">Bed Bug Heat Treatment</option>
+                                <option value="mosquitoes">Mosquitoes & Ticks Yard Barrier</option>
+                                <option value="wildlife">Humane Wildlife Relocation</option>
+                            </select>
+                        </div>
+
+                        <!-- Visitor Message Input -->
+                        <div class="space-y-2">
+                            <label for="visitor-message" class="block text-xs uppercase text-gray-400 font-semibold tracking-wider">Message Details *</label>
+                            <textarea id="visitor-message" required rows="4" placeholder="Describe the pest activity or property requirements..." class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-600 focus:outline-none focus:border-emeraldAccent transition-colors"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="apple-button w-full bg-emeraldAccent text-black font-bold py-4 rounded-xl text-lg flex items-center justify-center space-x-2">
+                            <span>Send Request</span>
+                            <i class="fa-solid fa-paper-plane text-sm"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="border-t border-white/10 bg-black/80 py-12 px-6 mt-16 z-10 relative">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 text-center md:text-left">
+            <div class="space-y-2">
+                <div class="flex items-center justify-center md:justify-start space-x-2">
+                    <i class="fa-solid fa-shield-halved text-emeraldAccent text-lg"></i>
+                    <span class="font-bold text-white">VerdantProtect</span>
+                </div>
+                <p class="text-xs text-gray-500">Premium Eco-Friendly Pest Control Systems for Patchogue, NY.</p>
+            </div>
+
+            <!-- Quick Footer Links -->
+            <div class="flex flex-wrap justify-center space-x-6 text-xs text-gray-400">
+                <button onclick="navigateTo('home')" class="hover:text-emeraldAccent transition-colors">Home</button>
+                <button onclick="navigateTo('service')" class="hover:text-emeraldAccent transition-colors">Services</button>
+                <button onclick="navigateTo('about')" class="hover:text-emeraldAccent transition-colors">About</button>
+                <button onclick="navigateTo('blog')" class="hover:text-emeraldAccent transition-colors">Blog</button>
+                <button onclick="navigateTo('contact')" class="hover:text-emeraldAccent transition-colors">Contact</button>
+            </div>
+
+            <p class="text-xs text-gray-600">
+                &copy; 2026 VerdantProtect Patchogue. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- HIGH-LEVEL JAVASCRIPT & INTERACTIVE CANVAS ENGINE -->
+    <script>
+        // --- 1. NEURAL MESH INTERACTIVE CANVAS BACKGROUND ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+
+                // Mouse interaction distance
+                if (mouse.x && mouse.y) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        this.x -= dx * 0.02;
+                        this.y -= dy * 0.02;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = '#00E676';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let particleCount = Math.floor((canvas.width * canvas.height) / 18000);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Connect nearby particles
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        ctx.strokeStyle = `rgba(0, 230, 118, ${1 - dist / 110})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.onload = function() {
+            resizeCanvas();
+            animateCanvas();
+            triggerScrollReveal();
+        };
+
+        // --- 2. 3D TILT & SPECULAR GLARE INTERACTION FOR CARDS ---
+        document.querySelectorAll('.apple-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+                card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+                card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+            });
+        });
+
+        // --- 3. PEST RISK RADAR RADIAL CALCULATOR LOGIC ---
+        function updatePestRadar(type, score, statusTitle) {
+            const circle = document.getElementById('radar-gauge-circle');
+            const scoreText = document.getElementById('radar-score-text');
+            const titleText = document.getElementById('radar-status-title');
+            const descText = document.getElementById('radar-status-desc');
+
+            // Calculate SVG Dash Offset (251.2 is max circumference)
+            const circumference = 251.2;
+            const offset = circumference - (score / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+            scoreText.textContent = score + '%';
+            titleText.textContent = statusTitle;
+
+            const descriptions = {
+                'termites': 'High humidity along Patchogue bay areas triggers heavy subterranean activity near timber frames.',
+                'rodents': 'Attic insulation and crawlspaces are high-priority invasion routes during autumn drops.',
+                'bedbugs': 'High summer visitor flow requires thermal eco-diffusion barriers for total eradication.',
+                'mosquitoes': 'Coastal yard moisture promotes rapid larvae growth along outdoor residential zones.'
+            };
+            descText.textContent = descriptions[type] || '';
+
+            // Update Active Button Style
+            document.querySelectorAll('.radar-btn').forEach(btn => {
+                btn.classList.remove('bg-emeraldAccent/20', 'text-emeraldAccent', 'border-emeraldAccent');
+                btn.classList.add('bg-black/50', 'text-gray-400', 'border-white/10');
+            });
+
+            event.currentTarget.classList.remove('bg-black/50', 'text-gray-400', 'border-white/10');
+            event.currentTarget.classList.add('bg-emeraldAccent/20', 'text-emeraldAccent', 'border-emeraldAccent');
+        }
+
+        // --- 4. NAVIGATION & SPA SECTION CONTROLLER ---
+        function navigateTo(pageId) {
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            const activePage = document.getElementById(`page-${pageId}`);
+            if (activePage) {
+                activePage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-emeraldAccent');
+                btn.classList.add('text-gray-400');
+            });
+
+            const currentActiveBtn = document.getElementById(`nav-${pageId}`);
+            if (currentActiveBtn) {
+                currentActiveBtn.classList.remove('text-gray-400');
+                currentActiveBtn.classList.add('text-emeraldAccent');
+            }
+
+            triggerScrollReveal();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-toggle').addEventListener('click', toggleMobileMenu);
+
+        // --- 5. SCROLL REVEAL ANIMATIONS ---
+        function triggerScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 80) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', triggerScrollReveal);
+
+        // --- 6. DISCREET CONTACT FORM SUBMISSION ---
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const successMsg = document.getElementById('contact-success-message');
+            const form = document.getElementById('pest-inquiry-form');
+
+            successMsg.classList.remove('hidden');
+            form.reset();
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    </script>
+</body>
+</html>
